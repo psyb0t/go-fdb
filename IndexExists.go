@@ -4,8 +4,8 @@ import (
     "os"
 )
 
-func (c *Collection) KeyExists(key string) bool {
-    _, err := os.Stat(c.Key2IndexPath(key))
+func (c *Collection) IndexExists(index int) bool {
+    _, err := os.Stat(c.Index2KeyPath(index))
 
     if os.IsNotExist(err) {
         return false

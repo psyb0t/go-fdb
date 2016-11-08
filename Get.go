@@ -12,7 +12,7 @@ func (c *Collection) Get(key string) (string, error) {
         return "", errors.New("Key does not exist")
     }
 
-    value, err := ioutil.ReadFile(c.KeyPath(key))
+    value, err := ioutil.ReadFile(c.KeyValuePath(key))
 
     decomp_val, err := genutils.Decompress(value)
 

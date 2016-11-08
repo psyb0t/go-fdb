@@ -2,39 +2,30 @@ package fdb
 
 import (
     "os"
-    "strconv"
-    "io/ioutil"
+
+    "github.com/psyb0t/go-genutils"
 )
 
 func (c *Collection) Make() error {
     _, err := os.Stat(c.Path)
 
-    if os.IsNotExist(err) {
-        err := os.MkdirAll(c.Path, 0644)
-
-        if err != nil {
-            return err
-        }
-
-        return nil
-    }
+    err = genutils.MkDirAll(c.Path)
 
     if err != nil {
         return err
     }
 
-    keynofpath := c.Path + "/" + keyno_file
+    index_to_key_path := c.Path + "/" + index_to_key_dir
 
-    _, err = os.Stat(keynofpath)
+    err = genutils.MkDirAll(index_to_key_path)
 
-    if os.IsNotExist(err) {
-        err = ioutil.WriteFile(
-            keynofpath, []byte(strconv.Itoa(c.IndexAt)), 0644)
-
-        if err != nil {
-            return err
-        }
+    if err != nil {
+        return err
     }
+
+    key_to_index_path := c.Path + "/" + key_to_index_dir
+
+    err = genutils.MkDirAll(key_to_index_path)
 
     if err != nil {
         return err

@@ -1,17 +1,14 @@
 package fdb
 
-var reserved_cnames = []string{"keys"}
-var keyno_file = ".keys"
-var keyfile_ext = ".fdbk"
-
-type Key struct {
-    Index int
-    Name string
-    Path string
-}
+var index_to_key_dir = ".i2k"
+var key_to_index_dir = ".k2i"
+var last_index_file = ".index_at"
+var key_val_file_ext = ".fdbk"
 
 type Collection struct {
     Path string
     Keys []string
-    IndexAt int
+    Indexes []int
+    KeyToIndex map[*string]*int
+    IndexToKey map[*int]*string
 }
