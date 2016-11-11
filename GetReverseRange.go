@@ -1,6 +1,6 @@
 package fdb
 
-func (c *Collection) GetRange(from int, to int) ([]string, error) {
+func (c *Collection) GetReverseRange(from int, to int) ([]string, error) {
     if len(c.Indexes) < to {
         to = len(c.Indexes)
     }
@@ -9,7 +9,13 @@ func (c *Collection) GetRange(from int, to int) ([]string, error) {
         from = to
     }
 
-    range_indexes := c.Indexes[from:to]
+    reverse_indexes := []int{}
+
+    for i:=len(c.Indexes)-1; i>=0; i-- {
+        reverse_indexes = append(reverse_indexes, c.Indexes[i])
+    }
+
+    range_indexes := reverse_indexes[from:to]
 
     var values []string
     for _, key_index := range range_indexes {

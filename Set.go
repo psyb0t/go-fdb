@@ -10,7 +10,7 @@ func (c *Collection) Set(key string, value string) error {
         return errors.New("Key already exists")
     }
 
-    regexpr, err := regexp.Compile("^[a-zA-Z0-9-_]+$")
+    regexpr, err := regexp.Compile("^[a-zA-Z0-9-_:]+$")
 
     if err != nil {
         return err
