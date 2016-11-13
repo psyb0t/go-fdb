@@ -17,6 +17,9 @@ func NewCollection(path string) (Collection, error) {
         return *collection, err
     }
 
+    collection.Key2File = make(map[string]string)
+    collection.File2Key = make(map[string]string)
+
     err = collection.Init()
 
     if err != nil {

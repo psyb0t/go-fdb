@@ -1,19 +1,19 @@
 package fdb
 
 func (c *Collection) GetRange(from int, to int) ([]string, error) {
-    if len(c.Indexes) < to {
-        to = len(c.Indexes)
+    if len(c.Keys) < to {
+        to = len(c.Keys)
     }
 
     if from > to {
         from = to
     }
 
-    range_indexes := c.Indexes[from:to]
+    range_keys := c.Keys[from:to]
 
     var values []string
-    for _, key_index := range range_indexes {
-        value, err := c.GetByIndex(key_index)
+    for _, key_name := range range_keys {
+        value, err := c.KeyValue(key_name)
 
         if err != nil {
             continue

@@ -1,41 +1,30 @@
 package fdb
 
 import (
-    "strconv"
+    "log"
+    "regexp"
     "io/ioutil"
 )
 
 func (c *Collection) Init() error {
-    index_files, err := ioutil.ReadDir(c.Path + "/" + index_to_key_dir)
+    log.Print("Initializing FDB RAM stuff...")
+
+    index_files, err := ioutil.ReadDir(c.Path)
 
     if err != nil {
         return err
     }
 
-    c.KeyToIndex = make(map[*string]*int)
-    c.IndexToKey = make(map[*int]*string)
-
+    re := regexp.MustCompile("\\d{19}~(.*?)" + key_val_file_ext)
     for _, file := range index_files {
-        fname := file.Name()
+        keyfile := file.Name()
 
-        index, err := strconv.Atoi(fname)
+        key := re.ReplaceAllString(keyfile, "$1")
 
-        if err != nil {
-            return err
-        }
-
-        key, err := c.KeyByIndex(index)
-
-        if err != nil {
-            return err
-        }
-
-        c.Indexes = append(c.Indexes, index)
-        c.Keys = append(c.Keys, key)
-
-        c.KeyToIndex[&key] = &index
-        c.IndexToKey[&index] = &key
+        c.KeyInMem(key, keyfile)
     }
+
+    log.Print("FDB RAM stuff initialized!")
 
     return nil
 }

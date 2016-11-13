@@ -18,7 +18,7 @@ func (c *Collection) Update(key string, value string) error {
         return err
     }
 
-    err = ioutil.WriteFile(c.KeyValuePath(key), comp_val, 0644)
+    err = ioutil.WriteFile(c.KeyPath(key), comp_val, 0644)
 
     if err != nil {
         return err

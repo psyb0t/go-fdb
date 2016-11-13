@@ -4,41 +4,35 @@ import "regexp"
 
 func (c *Collection) GetFilteredReverseRange(
   from int, to int, regex string) ([]string, error) {
-    if len(c.Indexes) < to {
-        to = len(c.Indexes)
+    if len(c.Keys) < to {
+        to = len(c.Keys)
     }
 
     if from > to {
         from = to
     }
 
-    reverse_indexes := []int{}
+    reverse_keys := []*string{}
 
-    for i:=len(c.Indexes)-1; i>=0; i-- {
-        reverse_indexes = append(reverse_indexes, c.Indexes[i])
+    for i:=len(c.Keys)-1; i>=0; i-- {
+        reverse_keys = append(reverse_keys, &c.Keys[i])
     }
 
-    range_indexes := reverse_indexes[from:to]
+    range_keys := reverse_keys[from:to]
 
     var values []string
-    for _, key_index := range range_indexes {
-        key_name, err := c.KeyByIndex(key_index)
-
-        if err != nil {
-            continue
-        }
-
+    for _, key_name := range range_keys {
         re, err := regexp.Compile(regex)
 
         if err != nil {
             return values, err
         }
 
-        if !re.MatchString(key_name) {
+        if !re.MatchString(*key_name) {
             continue
         }
 
-        value, err := c.GetByIndex(key_index)
+        value, err := c.KeyValue(*key_name)
 
         if err != nil {
             continue

@@ -15,21 +15,5 @@ func (c *Collection) Make() error {
         return err
     }
 
-    index_to_key_path := c.Path + "/" + index_to_key_dir
-
-    err = genutils.MkDirAll(index_to_key_path)
-
-    if err != nil {
-        return err
-    }
-
-    key_to_index_path := c.Path + "/" + key_to_index_dir
-
-    err = genutils.MkDirAll(key_to_index_path)
-
-    if err != nil {
-        return err
-    }
-
     return nil
 }
