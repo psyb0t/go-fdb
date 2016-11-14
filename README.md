@@ -77,7 +77,7 @@ func main() {
 ## Testing alongside redis
 
 ```
-I have a website which contains videos and video categories(see [go-content-master](https://github.com/psyb0t/go-content-master/))
+I have a website which contains videos and video categories(see go-content-master)
 
 DB has
 213637 Videos
