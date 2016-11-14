@@ -4,14 +4,6 @@ import "regexp"
 
 func (c *Collection) GetFilteredReverseRange(
   from int, to int, regex string) ([]string, error) {
-    if len(c.Keys) < to {
-        to = len(c.Keys)
-    }
-
-    if from > to {
-        from = to
-    }
-
     re, err := regexp.Compile(regex)
 
     if err != nil {
@@ -26,6 +18,14 @@ func (c *Collection) GetFilteredReverseRange(
         }
 
         reverse_keys = append(reverse_keys, &c.Keys[i])
+    }
+
+    if len(reverse_keys) < to {
+        to = len(reverse_keys)
+    }
+
+    if from > to {
+        from = to
     }
 
     range_keys := reverse_keys[from:to]
