@@ -2,7 +2,7 @@
 
 ## Usage
 
-```golang
+```go
 package main
 
 import (
@@ -73,3 +73,46 @@ func main() {
     fmt.Println(collection.Keys) // [SpamKey1 SpamKey2 SpamKey3 SpemKey1]
 }
 ```
+
+## Testing alongside redis
+
+```
+I have a website which contains videos and video categories(see [go-content-master](https://github.com/psyb0t/go-content-master/))
+
+DB has
+213637 Videos
+5350 Categories
+
+Init time to load required stuffz:
+FDB: 2sec
+Redis: 11sec
+
+RAM:
+FDB: 677MB RAM
+Redis: 2227MB RAM
+
+Disk space:
+FDB: 897MB
+Redis: 1018MB
+
+ApacheBuffer percentage of the requests served within a certain time (ms)
+Launched with 1000 concurrent requests and 20000 total request number
+--------------------------------------
+FDB          | REDIS
+             |
+ 50%     56  |  50%     41
+ 66%     86  |  66%     63
+ 75%    223  |  75%     89
+ 80%    262  |  80%    224
+ 90%    715  |  90%    350
+ 95%   1058  |  95%   1022
+ 98%   1395  |  98%   1257
+ 99%   2331  |  99%   1497
+100%  11565  | 100%   5047
+```
+
+I think that with a little bit of caching and more goroutines the latency numbers will go down.
+
+No problems on single element get / set / update.
+
+Ranges are messier.
