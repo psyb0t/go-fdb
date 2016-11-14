@@ -1,5 +1,6 @@
 package fdb
 
+var illegal_chars = "^[a-zA-Z0-9-_:]+$"
 var key_val_file_ext = ".fdbk"
 
 type Collection struct {

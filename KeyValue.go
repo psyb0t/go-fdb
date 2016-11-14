@@ -3,6 +3,7 @@ package fdb
 import (
     "errors"
     "io/ioutil"
+
     "github.com/psyb0t/go-genutils"
 )
 
@@ -12,6 +13,10 @@ func (c *Collection) KeyValue(key string) (string, error) {
     }
 
     value, err := ioutil.ReadFile(c.KeyPath(key))
+
+    if err != nil {
+        return "caca", err
+    }
 
     decomp_val, err := genutils.Decompress(value)
 

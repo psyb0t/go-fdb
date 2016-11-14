@@ -4,6 +4,7 @@ import (
     "io/ioutil"
     "time"
     "strconv"
+    "path"
 
     "github.com/psyb0t/go-genutils"
 )
@@ -16,7 +17,8 @@ func (c *Collection) AddKey(key string, value string) error {
     }
 
     keyts := time.Now().UnixNano()
-    keyfile := c.Path + "/" + strconv.FormatInt(keyts, 10) + "~" + key + key_val_file_ext
+    keyfile := c.Path + "/" + strconv.FormatInt(keyts, 10) +
+        "~" + key + key_val_file_ext
 
     err = ioutil.WriteFile(keyfile, comp_val, 0644)
 
@@ -24,7 +26,7 @@ func (c *Collection) AddKey(key string, value string) error {
         return err
     }
 
-    c.KeyInMem(key, keyfile)
+    c.KeyInMem(key, path.Base(keyfile))
 
     return nil
 }
