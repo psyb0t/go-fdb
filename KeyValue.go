@@ -15,7 +15,7 @@ func (c *Collection) KeyValue(key string) (string, error) {
     value, err := ioutil.ReadFile(c.KeyPath(key))
 
     if err != nil {
-        return "caca", err
+        return "", err
     }
 
     decomp_val, err := genutils.Decompress(value)

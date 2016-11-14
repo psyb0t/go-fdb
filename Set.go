@@ -3,6 +3,7 @@ package fdb
 import (
     "errors"
     "regexp"
+    "fmt"
 )
 
 func (c *Collection) Set(key string, value string) error {
@@ -21,6 +22,7 @@ func (c *Collection) Set(key string, value string) error {
     }
 
     err = c.AddKey(key, value)
+    fmt.Println(c.Keys[len(c.Keys)-1])
 
     if err != nil {
         return err

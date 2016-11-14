@@ -4,7 +4,7 @@ import (
     "strings"
 )
 
-func NewCollection(path string) (Collection, error) {
+func NewCollection(path string) (*Collection, error) {
     path = strings.TrimRight(path, "/")
 
     collection := &Collection{
@@ -14,17 +14,14 @@ func NewCollection(path string) (Collection, error) {
     err := collection.Make()
 
     if err != nil {
-        return *collection, err
+        return collection, err
     }
-
-    collection.Key2File = make(map[string]string)
-    collection.File2Key = make(map[string]string)
 
     err = collection.Init()
 
     if err != nil {
-        return *collection, err
+        return collection, err
     }
 
-    return *collection, nil
+    return collection, nil
 }

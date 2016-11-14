@@ -15,5 +15,8 @@ func (c *Collection) Make() error {
         return err
     }
 
+    c.Key2File = make(map[string]string)
+    c.File2Key = make(map[string]string)
+
     return nil
 }

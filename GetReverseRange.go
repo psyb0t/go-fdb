@@ -9,17 +9,19 @@ func (c *Collection) GetReverseRange(from int, to int) ([]string, error) {
         from = to
     }
 
-    reverse_keys := []*string{}
+    //reverse_keys := []*string{}
 
-    for i:=len(c.Keys)-1; i>=0; i-- {
-        reverse_keys = append(reverse_keys, &c.Keys[i])
-    }
+    reverse_keys := reverseSlice(c.Keys)
+
+    //for i:=len(c.Keys)-1; i>=0; i-- {
+    //    reverse_keys = append(reverse_keys, &c.Keys[i])
+    //}
 
     range_keys := reverse_keys[from:to]
 
     var values []string
     for _, key_name := range range_keys {
-        value, err := c.KeyValue(*key_name)
+        value, err := c.KeyValue(key_name)
 
         if err != nil {
             continue
@@ -29,4 +31,11 @@ func (c *Collection) GetReverseRange(from int, to int) ([]string, error) {
     }
 
     return values, nil
+}
+
+func reverseSlice(input []string) []string {
+    if len(input) == 0 {
+        return input
+    }
+    return append(reverseSlice(input[1:]), input[0])
 }
