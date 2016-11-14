@@ -12,9 +12,19 @@ func (c *Collection) GetFilteredReverseRange(
         from = to
     }
 
+    re, err := regexp.Compile(regex)
+
+    if err != nil {
+        return []string{}, err
+    }
+
     reverse_keys := []*string{}
 
     for i:=len(c.Keys)-1; i>=0; i-- {
+        if !re.MatchString(c.Keys[i]) {
+            continue
+        }
+
         reverse_keys = append(reverse_keys, &c.Keys[i])
     }
 
@@ -22,16 +32,6 @@ func (c *Collection) GetFilteredReverseRange(
 
     var values []string
     for _, key_name := range range_keys {
-        re, err := regexp.Compile(regex)
-
-        if err != nil {
-            return values, err
-        }
-
-        if !re.MatchString(*key_name) {
-            continue
-        }
-
         value, err := c.KeyValue(*key_name)
 
         if err != nil {

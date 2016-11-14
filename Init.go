@@ -7,7 +7,7 @@ import (
 )
 
 func (c *Collection) Init() error {
-    log.Print("Initializing FDB RAM stuff...")
+    log.Print("Initializing FDB RAM stuff from ", c.Path)
 
     index_files, err := ioutil.ReadDir(c.Path)
 
@@ -24,7 +24,7 @@ func (c *Collection) Init() error {
         c.KeyInMem(key, keyfile)
     }
 
-    log.Print("FDB RAM stuff initialized!")
+    log.Print(c.Path, " FDB RAM stuff initialized!")
 
     return nil
 }
