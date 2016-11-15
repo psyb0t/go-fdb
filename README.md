@@ -1,4 +1,4 @@
-# FileDB - Even a cheap ass VPS can hold and serve 3million DB entries
+# FilesDB - Even a cheap ass VPS can hold and serve 3million DB entries
 
 ## Usage
 
