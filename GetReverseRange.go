@@ -1,5 +1,7 @@
 package fdb
 
+import "github.com/psyb0t/go-genutils"
+
 func (c *Collection) GetReverseRange(from int, to int) ([]string, error) {
     if len(c.Keys) < to {
         to = len(c.Keys)
@@ -9,13 +11,7 @@ func (c *Collection) GetReverseRange(from int, to int) ([]string, error) {
         from = to
     }
 
-    //reverse_keys := []*string{}
-
-    reverse_keys := reverseSlice(c.Keys)
-
-    //for i:=len(c.Keys)-1; i>=0; i-- {
-    //    reverse_keys = append(reverse_keys, &c.Keys[i])
-    //}
+    reverse_keys := genutils.RevStrSlice(c.Keys)
 
     range_keys := reverse_keys[from:to]
 
